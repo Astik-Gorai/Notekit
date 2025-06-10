@@ -1,0 +1,23 @@
+import { Routes } from '@angular/router';
+import { SignUpComponent } from './Home/sign-up/sign-up.component';
+import { LoginComponent } from './Home/login/login.component';
+import { HeroSectionComponent } from './Home/hero-section/hero-section.component';
+import { MyNotesComponent } from './Features/my-notes/my-notes.component';
+export const routes: Routes = [
+    {
+        path:'home',
+        component:HeroSectionComponent
+    },
+    {
+        path:'signup',
+        component: SignUpComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path:'my-notes',
+        component: MyNotesComponent
+    }
+];

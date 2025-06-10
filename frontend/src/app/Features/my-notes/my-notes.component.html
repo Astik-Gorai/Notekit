@@ -1,0 +1,76 @@
+<div class="container">
+  <h2>My Notes</h2>
+  
+  <div class="controls">
+    <button (click)="openCreatePopup('file')">Create New File</button>
+    <button (click)="openCreatePopup('folder')">Create New Folder</button>
+  </div>
+
+  <div class="breadcrumb">
+    <span *ngFor="let folder of path; let i = index; let last = last">
+      <span 
+        class="breadcrumb-item" 
+        (click)="navigateToFolder(i)"
+        [class.clickable]="!last">
+        {{ folder.name }}
+      </span>
+      <span *ngIf="!last"> / </span>
+    </span>
+  </div>
+
+  <div class="file-list" *ngIf="currentFolder.children && currentFolder.children.length > 0">
+    <h3>Contents of {{ currentFolder.name }}</h3>
+    <ul>
+      <li *ngFor="let item of currentFolder.children">
+        <span 
+          [class.folder]="item.type === 'folder'"
+          [class.file]="item.type === 'file'"
+          (click)="item.type === 'folder' ? selectFolder(item) : openEditPopup(item)"
+          [class.clickable]="true">
+          {{ item.type === 'folder' ? '📁' : '📄' }} {{ item.name }}
+          <small>(Created: {{ item.createdAt | date:'short' }})</small>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="file-list" *ngIf="!(currentFolder.children && currentFolder.children.length > 0)">
+    <p>No files or folders in {{ currentFolder.name }}</p>
+  </div>
+
+  <!-- Create Popup -->
+  <div class="popup" *ngIf="isCreatePopupVisible">
+    <div class="popup-content">
+      <h3>Create New {{ type | titlecase }} in {{ currentFolder.name }}</h3>
+      <input 
+        type="text" 
+        [(ngModel)]="fileName" 
+        placeholder="Enter name" 
+        (keyup.enter)="submitCreate()">
+      <div class="popup-buttons">
+        <button (click)="submitCreate()">Create</button>
+        <button (click)="closeCreatePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Popup -->
+  <div class="popup" *ngIf="isEditPopupVisible">
+    <div class="popup-content">
+      <h3>Edit File: {{ fileName }}</h3>
+      <input 
+        type="text" 
+        [(ngModel)]="fileName" 
+        placeholder="File name"
+        (keyup.enter)="saveFile()">
+      <textarea 
+        [(ngModel)]="fileContent" 
+        placeholder="Enter file content" 
+        rows="10"></textarea>
+      <div class="popup-buttons">
+        <button (click)="saveFile()">Save</button>
+        <button (click)="closeEditPopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
