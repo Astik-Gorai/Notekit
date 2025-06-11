@@ -1,0 +1,6 @@
+<div class="editor-container">
+  <h1 class="text-center">{{title}}</h1>
+    <button *ngIf="isReadOnly" class="cursor-pointer" (click)="editNote()">Edit</button>
+       <button *ngIf="!isReadOnly" class="cursor-pointer" (click)="saveNote()">Save</button>
+  <div id="editorjs"></div>
+</div>

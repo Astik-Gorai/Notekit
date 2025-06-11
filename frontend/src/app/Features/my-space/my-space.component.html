@@ -1,0 +1,19 @@
+<div class="container">
+    <h2 class="text-2xl">My Space</h2>
+    <div class="my-notes">
+        <h3>My Notes</h3>
+        <div *ngFor="let item of files; let i = index">
+            <button class="cursor-pointer" (click)="openPreview(i)">📄{{ item?.title }}</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="cursor-pointer" (click)="createNote()">Create a New Note</button>
+        <div *ngIf="isCreateNoteVisible">
+            <app-my-editor (dataEvent)="receiveData($event)"></app-my-editor>
+        </div>
+        <div *ngIf="isPreviewVisible">
+            <app-note-preview [data]="this.files[this.currentFileIndex]"></app-note-preview>
+        </div>
+    </div>
+</div>

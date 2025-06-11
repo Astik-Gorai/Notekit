@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import EditorJS, { ToolConstructable, OutputData } from '@editorjs/editorjs';
+import { Component, OnInit, OnDestroy, Output , EventEmitter} from '@angular/core';
+import EditorJS, { ToolConstructable, OutputData, OutputBlockData } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import CodeTool from '@editorjs/code';
@@ -12,10 +12,17 @@ import { FormsModule } from '@angular/forms';
 
 
 // import ColorPlugin from 'editorjs-text-color-plugin';
-interface CustomOutputData extends OutputData {
-  name?: string; // Optional name property
-}
 
+interface NoteData{
+  title: string
+  blocks :OutputBlockData<string, any>[];
+  version?: string
+  like: Number
+  comment: Array<Object>
+  isShared: boolean
+  time?: number 
+  owner: string
+}
 @Component({
   selector: 'app-my-editor',
   standalone: true,
@@ -24,14 +31,16 @@ interface CustomOutputData extends OutputData {
   styleUrl: './my-editor.component.css'
 })
 export class MyEditorComponent implements OnInit, OnDestroy {
+  @Output() dataEvent = new EventEmitter<NoteData>();
   private editor: EditorJS | null = null;
   noteTitle: string = '';
-  ngOnInit() {
+  completeData!: NoteData;
+  ngOnInit() : void {
     this.initializeEditor();
     console.log('Initializing your text editor')
   }
 
-  ngOnDestroy() {
+  ngOnDestroy() : void{
     if (this.editor) {
       this.editor.destroy();
       this.editor = null;
@@ -138,9 +147,13 @@ export class MyEditorComponent implements OnInit, OnDestroy {
     if (this.editor) {
       try {
         const outputData = await this.editor.save();
-        console.log('Saved content:', outputData);
+        this.completeData = {...outputData,title: this.noteTitle, isShared: false, like: 0, comment: [],owner: 'Mr. Astik'}
+        console.log('Saved content:', this.completeData);
         // Implement your save logic here (e.g., send to backend)
-        return outputData;
+        this.dataEvent.emit(this.completeData);
+        this.editor.clear();
+        this.noteTitle='';
+        return this.completeData;
       } catch (error) {
         console.error('Saving failed:', error);
       }
