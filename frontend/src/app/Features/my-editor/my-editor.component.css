@@ -42,3 +42,12 @@
   outline: none;
   box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.3);
 }
+
+.note-title-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

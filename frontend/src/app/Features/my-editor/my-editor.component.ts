@@ -7,6 +7,7 @@ import Table from '@editorjs/table';
 import InlineCode from '@editorjs/inline-code';
 import Quote from '@editorjs/quote';
 import ImageTool from '@editorjs/image';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -18,13 +19,13 @@ interface CustomOutputData extends OutputData {
 @Component({
   selector: 'app-my-editor',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './my-editor.component.html',
   styleUrl: './my-editor.component.css'
 })
 export class MyEditorComponent implements OnInit, OnDestroy {
   private editor: EditorJS | null = null;
-
+  noteTitle: string = '';
   ngOnInit() {
     this.initializeEditor();
     console.log('Initializing your text editor')
