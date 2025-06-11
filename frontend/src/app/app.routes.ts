@@ -6,6 +6,7 @@ import { MyNotesComponent } from './Features/my-notes/my-notes.component';
 import { MyEditorComponent } from './Features/my-editor/my-editor.component';
 import { MySpaceComponent } from './Features/my-space/my-space.component';
 import { NotePreviewComponent } from './Features/note-preview/note-preview.component';
+import { MyProfileComponent } from './Home/my-profile/my-profile.component';
 
 export const routes: Routes = [
     {
@@ -31,5 +32,9 @@ export const routes: Routes = [
     {
         path: 'note-preview',
         component: NotePreviewComponent
+    },
+    {
+        path: 'my-profile',
+        component:MyProfileComponent
     }
 ];

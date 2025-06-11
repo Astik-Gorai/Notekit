@@ -1,0 +1,55 @@
+<div class="profile-container">
+  <h2 class="profile-heading">My Profile</h2>
+
+  <div class="profile-card">
+    <div class="form-group">
+      <label>Full Name</label>
+      <input 
+        [(ngModel)]="userProfile.fullName" 
+        [readonly]="!isEditMode" 
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input 
+        [(ngModel)]="userProfile.email" 
+        [readonly]="!isEditMode" 
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Role</label>
+      <input 
+        [(ngModel)]="userProfile.role" 
+        [readonly]="!isEditMode" 
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Location</label>
+      <input 
+        [(ngModel)]="userProfile.location" 
+        [readonly]="!isEditMode" 
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Bio</label>
+      <textarea 
+        [(ngModel)]="userProfile.bio" 
+        [readonly]="!isEditMode" 
+        class="form-control textarea-control"
+      ></textarea>
+    </div>
+
+    <div class="action-buttons">
+      <button *ngIf="!isEditMode" class="edit-button" (click)="toggleEditMode()">Edit</button>
+      <button *ngIf="isEditMode" class="save-button" (click)="saveProfile()">Save</button>
+    </div>
+  </div>
+</div>

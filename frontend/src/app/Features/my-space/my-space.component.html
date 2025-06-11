@@ -1,19 +1,28 @@
-<div class="container">
-    <h2 class="text-2xl">My Space</h2>
-    <div class="my-notes">
-        <h3>My Notes</h3>
-        <div *ngFor="let item of files; let i = index">
-            <button class="cursor-pointer" (click)="openPreview(i)">📄{{ item?.title }}</button>
-        </div>
+<div class="myspace-container">
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <h2 class="section-title">My Space</h2>
+
+    <button class="create-button" (click)="createNote()">Create a New Note</button>
+
+    <div *ngIf="isCreateNoteVisible" class="editor-wrapper">
+      <app-my-editor (dataEvent)="receiveData($event)"></app-my-editor>
     </div>
 
-    <div class="controls">
-        <button class="cursor-pointer" (click)="createNote()">Create a New Note</button>
-        <div *ngIf="isCreateNoteVisible">
-            <app-my-editor (dataEvent)="receiveData($event)"></app-my-editor>
-        </div>
-        <div *ngIf="isPreviewVisible">
-            <app-note-preview [data]="this.files[this.currentFileIndex]"></app-note-preview>
-        </div>
+    <div *ngIf="isPreviewVisible" class="preview-wrapper">
+      <app-note-preview [data]="files[currentFileIndex]"></app-note-preview>
     </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <h3 class="subheading">My Notes</h3>
+    <div class="note-list">
+  <div *ngFor="let item of files; let i = index" class="note-entry">
+    <button class="note-button" (click)="openPreview(i)">📄 {{ item?.title }}</button>
+    <button class="delete-button" (click)="deleteNote(i)">X</button>
+  </div>
+</div>
+
+  </div>
 </div>

@@ -7,7 +7,6 @@ import Table from '@editorjs/table';
 import InlineCode from '@editorjs/inline-code';
 import Quote from '@editorjs/quote';
 import ImageTool from '@editorjs/image';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 

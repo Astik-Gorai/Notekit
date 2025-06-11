@@ -49,6 +49,22 @@ export class MySpaceComponent {
     this.isCreateNoteVisible = false;
     this.isPreviewVisible = true;
   }
+  deleteNote(index: number) {
+  if (index === this.currentFileIndex) {
+    // If deleting the previewed note, hide preview
+    this.isPreviewVisible = false;
+    this.currentFileIndex = -1;
+  }
+
+  this.files.splice(index, 1);
+
+  // Reset view if no notes are left
+  if (this.files.length === 0) {
+    this.isPreviewVisible = false;
+    this.isCreateNoteVisible = true;
+  }
+}
+
 
      
 }
