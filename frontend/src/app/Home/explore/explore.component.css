@@ -1,0 +1,71 @@
+.note-container {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: 8px;
+  max-width: 600px;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.user {
+  font-weight: bold;
+}
+
+.note-content {
+  margin: 12px 0;
+  white-space: pre-wrap;
+}
+
+.note-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.social-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.social-actions button.liked {
+  color: #ff4444;
+}
+
+.comments-section {
+  margin-top: 16px;
+}
+
+.new-comment {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.new-comment textarea {
+  flex: 1;
+  min-height: 60px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.comment {
+  border-top: 1px solid #eee;
+  padding: 8px 0;
+}
+
+.comment-user {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.comment-time {
+  color: #666;
+  font-size: 0.9em;
+}

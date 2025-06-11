@@ -1,0 +1,44 @@
+.editor-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#editorjs {
+ min-height: 300px;
+ overflow: auto;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+#editorjs .codex-editor__redactor {
+  padding-bottom: 100px !important;
+}
+
+.save-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #2f80ed;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background-color: #1a73e8;
+}
+
+.save-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.3);
+}

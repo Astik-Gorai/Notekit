@@ -68,8 +68,8 @@ export class MyNotesComponent {
   }
 
   createFile(name: string) {
-    const fileNameWithExtension = name.endsWith('.txt') ? name : `${name}.txt`;
-    
+    // const fileNameWithExtension = name.endsWith('.txt') ? name : `${name}.txt`;
+    const fileNameWithExtension = name;
     const newFile: FileNode = {
       name: fileNameWithExtension,
       type: 'file',

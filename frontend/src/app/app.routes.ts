@@ -3,6 +3,8 @@ import { SignUpComponent } from './Home/sign-up/sign-up.component';
 import { LoginComponent } from './Home/login/login.component';
 import { HeroSectionComponent } from './Home/hero-section/hero-section.component';
 import { MyNotesComponent } from './Features/my-notes/my-notes.component';
+import { MyEditorComponent } from './Features/my-editor/my-editor.component';
+
 export const routes: Routes = [
     {
         path:'home',
@@ -19,5 +21,9 @@ export const routes: Routes = [
     {
         path:'my-notes',
         component: MyNotesComponent
+    },
+    {
+        path: 'my-editor',
+        component: MyEditorComponent
     }
 ];

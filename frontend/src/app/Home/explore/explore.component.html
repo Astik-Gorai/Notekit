@@ -1,0 +1,42 @@
+<div class="note-container">
+  <div class="note-header">
+    <span class="user">{{ note.user }}</span>
+    <span class="timestamp">{{ note.createdAt | date:'medium' }}</span>
+  </div>
+  
+  <div class="note-content">
+    <div class="preview" *ngIf="!showFullContent">
+      <p *ngFor="let line of previewLines">{{ line }}</p>
+      <button *ngIf="note.content.split('\n').length > maxPreviewLines" 
+              (click)="toggleContent()">Show More</button>
+    </div>
+    <div class="full-content" *ngIf="showFullContent">
+      <p>{{ note.content }}</p>
+      <button (click)="toggleContent()">Show Less</button>
+    </div>
+  </div>
+
+  <div class="note-actions">
+    <button (click)="downloadNote()">Download {{ note.fileName }}</button>
+    <div class="social-actions">
+      <button (click)="toggleLike()" [ngClass]="{'liked': isLiked}">
+        {{ isLiked ? 'Unlike' : 'Like' }} ({{ note.likes }})
+      </button>
+      <span>Comments ({{ note.comments.length }})</span>
+    </div>
+  </div>
+
+  <div class="comments-section">
+    <div class="new-comment">
+      <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
+      <button (click)="addComment()" [disabled]="!newComment.trim()">Post</button>
+    </div>
+    <div class="comments-list">
+      <div class="comment" *ngFor="let comment of note.comments">
+        <span class="comment-user">{{ comment.user }}</span>
+        <span class="comment-time">{{ comment.timestamp | date:'short' }}</span>
+        <p>{{ comment.text }}</p>
+      </div>
+    </div>
+  </div>
+</div>
