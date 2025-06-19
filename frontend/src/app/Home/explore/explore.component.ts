@@ -1,76 +1,98 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { ProfileCardComponent } from "./profile-card/profile-card.component";
+import { ExploreService } from "./explore.service";
 
-
-
-interface Comment {
-  user: string;
-  text: string;
-  timestamp: Date;
+interface User{
+  name: string
+  email: string
+  userId: string
 }
-
-interface Note {
-  id: number;
-  user: string;
-  content: string;
-  fileName: string;
-  likes: number;
-  comments: Comment[];
-  createdAt: Date;
-}
-
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProfileCardComponent],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
 })
-export class ExploreComponent implements OnInit {
-  @Input() note!: Note;
-  isLiked: boolean = false;
-  newComment: string = '';
-  previewLines: string[] = [];
-  maxPreviewLines: number = 5;
-  showFullContent: boolean = false;
+export class ExploreComponent  implements OnInit{
 
-
+  searchQuery: string = '';
+  foundUsers: User[] = [];
+  friendRequests: User[]= [];
+  myFriends: User[] = []
+  requestSent: boolean = false;
+  errorMsg: string = '';
+  constructor(private exploreService: ExploreService){
+    
+  }
   ngOnInit(): void {
-      this.generatePreview();
-  }
-  generatePreview(): void {
-    const lines = this.note.content.split('\n');
-    this.previewLines = lines.slice(0, this.maxPreviewLines);
-  }
-
-  toggleLike(): void {
-    this.isLiked = !this.isLiked;
-    this.note.likes += this.isLiked ? 1 : -1;
-  }
-
-   addComment(): void {
-    if (this.newComment.trim()) {
-      this.note.comments.push({
-        user: 'CurrentUser', // Replace with actual user from auth service
-        text: this.newComment,
-        timestamp: new Date()
+      this.exploreService.getAllFriendRequests().subscribe({
+        next: (data)=>{
+          this.friendRequests = data;
+          console.log(data);
+        },
+        error:(err)=>[
+          console.error('No Friend Request FOund')
+        ]
       });
-      this.newComment = '';
-    }
+      this.exploreService.getMyFriends().subscribe({
+        next: (allFriends)=>{
+          this.myFriends = allFriends;
+        },
+        error: (err)=>{
+          console.error(err)
+        }
+      })
+  }
+  searchFriend() {
+    this.errorMsg = '';
+    this.requestSent = false;
+    this.foundUsers = [];
+    
+    this.exploreService.getUserByNameOrEmail(this.searchQuery).subscribe({
+      next: (users)=>{
+        console.log(this.foundUsers)
+        this.foundUsers = users;
+      },
+      error: (err)=>{
+        this.errorMsg= 'No User Found'
+      }
+    })
   }
 
-  toggleContent(): void {
-    this.showFullContent = !this.showFullContent;
+  sendFriendRequest(userId: string) {
+    this.exploreService.sentFriendRequest(userId).subscribe({
+      next: ()=>{
+        this.requestSent = true;
+      },
+      error: (err)=>{
+        alert(`Something Wriong Happaned`)
+      }
+    })
   }
+  acceptRequest(friendId:string){
+    this.exploreService.acceptRequest(friendId).subscribe({
+      next: (data)=>{
+        alert(`Friend Request Accepted`)
+      },
+      error: (err)=>{
+        console.error(err)
+      }
+    })
+  }
+  rejectRequest(friendId:string){
+    this.exploreService.rejectRequest(friendId).subscribe({
+      next: ()=>{
+        alert(`Friend Request Rejected`)
+      },
+      error: (err)=>{
+        console.error(err)
+      }
+    })
+  }
+  openChat(friendId:string){
 
-  downloadNote(): void {
-    const blob = new Blob([this.note.content], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = this.note.fileName;
-    a.click();
-    window.URL.revokeObjectURL(url);
   }
 }

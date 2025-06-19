@@ -1,55 +1,22 @@
-<div class="profile-container">
-  <h2 class="profile-heading">My Profile</h2>
+<div class="loader-wrapper">
+  <app-loader *ngIf="isLoading"></app-loader>
+</div>
+<div *ngIf="!isLoading" class="profile-container">
+  <h2 class="profile-title">My Profile</h2>
 
   <div class="profile-card">
-    <div class="form-group">
+    <div class="profile-field">
       <label>Full Name</label>
-      <input 
-        [(ngModel)]="userProfile.fullName" 
-        [readonly]="!isEditMode" 
-        class="form-control"
-      />
+      <p>{{ fullname }}</p>
     </div>
 
-    <div class="form-group">
+    <div class="profile-field">
       <label>Email</label>
-      <input 
-        [(ngModel)]="userProfile.email" 
-        [readonly]="!isEditMode" 
-        class="form-control"
-      />
+      <p>{{ email }}</p>
     </div>
 
-    <div class="form-group">
-      <label>Role</label>
-      <input 
-        [(ngModel)]="userProfile.role" 
-        [readonly]="!isEditMode" 
-        class="form-control"
-      />
-    </div>
-
-    <div class="form-group">
-      <label>Location</label>
-      <input 
-        [(ngModel)]="userProfile.location" 
-        [readonly]="!isEditMode" 
-        class="form-control"
-      />
-    </div>
-
-    <div class="form-group">
-      <label>Bio</label>
-      <textarea 
-        [(ngModel)]="userProfile.bio" 
-        [readonly]="!isEditMode" 
-        class="form-control textarea-control"
-      ></textarea>
-    </div>
-
-    <div class="action-buttons">
-      <button *ngIf="!isEditMode" class="edit-button" (click)="toggleEditMode()">Edit</button>
-      <button *ngIf="isEditMode" class="save-button" (click)="saveProfile()">Save</button>
+    <div class="logout-section">
+      <button class="logout-button" (click)="logout()">Logout</button>
     </div>
   </div>
 </div>

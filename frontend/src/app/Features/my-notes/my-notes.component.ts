@@ -15,7 +15,7 @@ interface FileData {
   isShared: boolean; // Allows sharing status
   owner: string;
   like: number; // Stores the number of likes
-  comment: Array<{
+  comments: Array<{
     user: string;
     message: string; // Fixed typo
   }>;
@@ -30,7 +30,7 @@ const defaultFileData: FileData = {
   isShared: false,
   owner: "Unknown",
   like: 0,
-  comment: [],
+  comments: [],
   data: {
     time: new Date(),
     blocks: [],

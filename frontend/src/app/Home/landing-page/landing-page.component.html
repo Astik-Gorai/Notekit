@@ -1,0 +1,23 @@
+<section class="hero">
+  <div class="hero-content">
+    <h1>Welcome to NoteKit</h1>
+    <p>Your ultimate note-taking companion for productivity and organization.</p>
+    <a routerLink="/my-explorer" class="cta-button">Get Started</a>
+  </div>
+</section>
+
+<section class="features">
+  <h2>Why Choose NoteKit?</h2>
+  <div class="feature-grid">
+    <div *ngFor="let feature of features" class="feature-card">
+      <h3>{{ feature.title }}</h3>
+      <p>{{ feature.description }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Ready to Boost Your Productivity?</h2>
+  <p>Join now and share your thoughts to the World!</p>
+  <a routerLink="/my-explorer" class="cta-button">Try NoteKit Now</a>
+</section>

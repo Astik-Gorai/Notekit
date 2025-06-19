@@ -1,19 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MyEditorComponent } from '../my-editor/my-editor.component';
 import { NotePreviewComponent } from '../note-preview/note-preview.component';
 import { OutputBlockData } from '@editorjs/editorjs';
+import { NoteData, NotesService } from './notes.service';
 
-interface NoteData{
-  title: string
-  blocks : OutputBlockData<string, any>[];
-  version?: string
-  like: Number
-  comment: Array<Object>
-  isShared: boolean
-  time?: number 
-  owner: string
-}
+
 
 @Component({
   selector: 'app-my-space',
@@ -22,7 +14,7 @@ interface NoteData{
   templateUrl: './my-space.component.html',
   styleUrl: './my-space.component.css'
 })
-export class MySpaceComponent {
+export class MySpaceComponent implements OnInit {
   files: Array<NoteData> = [];
   title: string = ''
   isCreateNoteVisible  = true;
@@ -30,12 +22,41 @@ export class MySpaceComponent {
   receivedData: any;
   currentFileIndex = -1;
 
+  constructor(private notesService: NotesService){
+
+  }
+
+  ngOnInit(): void {
+      this.notesService.getAllNotes().subscribe({
+        next: (notes)=>{
+          this.files = notes;
+          console.log(this.files);
+        },
+        error: (err)=>{
+          console.error('Got error while subscribing')
+        }
+      })
+  }
+
+
 
   receiveData(data: NoteData) {
-    this.files.push(data);
+   
     console.log("Data Received: ", data)
     console.log(this.files)
-    this.receivedData = data; // Store received object
+    this.receivedData = data; 
+    this.notesService.createNewNote(data).subscribe({
+      next: (res)=>{
+         this.files.push(data);
+        console.log(res);
+      },
+      error: (err)=>{
+        if (err.status === 400) {
+    alert('Duplicate title found');
+  }
+        console.log(err)
+      }
+    })
   }
 
   createNote(){
@@ -46,11 +67,17 @@ export class MySpaceComponent {
   openPreview(index: number){
     console.log(`Notes for index : ${index}`)
     this.currentFileIndex = index;
+    console.log('On MySpace', this.files[this.currentFileIndex])
     this.isCreateNoteVisible = false;
     this.isPreviewVisible = true;
   }
   deleteNote(index: number) {
-  if (index === this.currentFileIndex) {
+    console.log(`Index Deleted: ${index}`)
+    console.log(`Frontend deletion: `, this.files[index])
+    this.notesService.deleteNote(this.files[index]).subscribe({
+      next: ()=>{
+        alert('Note Deleted');
+        if (index === this.currentFileIndex) {
     // If deleting the previewed note, hide preview
     this.isPreviewVisible = false;
     this.currentFileIndex = -1;
@@ -63,6 +90,12 @@ export class MySpaceComponent {
     this.isPreviewVisible = false;
     this.isCreateNoteVisible = true;
   }
+      },
+      error: (err)=>{
+        console.error(err)
+      }
+    })
+  
 }
 
 

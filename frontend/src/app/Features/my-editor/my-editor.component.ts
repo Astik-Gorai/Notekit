@@ -6,23 +6,15 @@ import CodeTool from '@editorjs/code';
 import Table from '@editorjs/table';
 import InlineCode from '@editorjs/inline-code';
 import Quote from '@editorjs/quote';
-import ImageTool from '@editorjs/image';
 import { FormsModule } from '@angular/forms';
+import { NoteData } from '../my-space/notes.service';
+import { defaultData } from './defaultData';
+import { GlobalStateService } from '../../global-state.service';
 
 
 
-// import ColorPlugin from 'editorjs-text-color-plugin';
 
-interface NoteData{
-  title: string
-  blocks :OutputBlockData<string, any>[];
-  version?: string
-  like: Number
-  comment: Array<Object>
-  isShared: boolean
-  time?: number 
-  owner: string
-}
+
 @Component({
   selector: 'app-my-editor',
   standalone: true,
@@ -35,6 +27,10 @@ export class MyEditorComponent implements OnInit, OnDestroy {
   private editor: EditorJS | null = null;
   noteTitle: string = '';
   completeData!: NoteData;
+
+  constructor(private globalStateService: GlobalStateService){
+
+  }
   ngOnInit() : void {
     this.initializeEditor();
     console.log('Initializing your text editor')
@@ -53,19 +49,19 @@ export class MyEditorComponent implements OnInit, OnDestroy {
       autofocus: true,
       tools: {
         header: {
-          class: Header as unknown as ToolConstructable,
+          class: Header ,
           config: {
             placeholder: 'Enter a header',
             levels: [1, 2, 3, 4],
-            defaultLevel: 1
+           defaultLevel: 3
           }
         },
         list: {
-          class: List as unknown as ToolConstructable,
+          class: List,
           inlineToolbar: true
         },
         code: {
-          class: CodeTool as unknown as ToolConstructable
+          class: CodeTool 
         },
         table: {
           class: Table as unknown as ToolConstructable,
@@ -76,23 +72,14 @@ export class MyEditorComponent implements OnInit, OnDestroy {
           }
         },
         inlineCode: {
-          class: InlineCode as unknown as ToolConstructable
+          class: InlineCode
         },
         quote: {
-          class: Quote as unknown as ToolConstructable,
+          class: Quote ,
           inlineToolbar: true,
           config: {
             quotePlaceholder: 'Enter a quote',
             captionPlaceholder: 'Quote\'s author'
-          }
-        },
-        image: {
-          class: ImageTool as unknown as ToolConstructable,
-          config: {
-            endpoints: {
-              byFile: '/api/uploadImage', // Your backend upload endpoint
-              byUrl: '/api/fetchUrl' // Your backend URL fetch endpoint
-            }
           }
         }
       },
@@ -107,36 +94,7 @@ export class MyEditorComponent implements OnInit, OnDestroy {
           // You can save the outputData to your backend here
         }
       },
-      data : {
-        time: new Date().getTime(),
-        blocks: [
-            {
-                type: "header",
-                data: {
-                    text: "Welcome to Editor.js!",
-                    level: 2
-                }
-            },
-            {
-                type: "paragraph",
-                data: {
-                    text: "This is a default paragraph block. You can edit or add more content."
-                }
-            },
-            {
-                type: "list",
-                data: {
-                    style: "unordered",
-                    items: [
-                        "Item 1",
-                        "Item 2",
-                        "Item 3"
-                    ]
-                }
-            }
-        ],
-        version: "2.27.0"
-    }
+      data : defaultData.data
     
       
 
@@ -144,10 +102,14 @@ export class MyEditorComponent implements OnInit, OnDestroy {
   }
 
   async saveContent() {
-    if (this.editor) {
+    if(this.noteTitle.trim().length == 0){
+      alert('Note Title Can not be empty');
+      
+    }else{
+       if (this.editor) {
       try {
         const outputData = await this.editor.save();
-        this.completeData = {...outputData,title: this.noteTitle, isShared: false, like: 0, comment: [],owner: 'Mr. Astik'}
+        this.completeData = {data: {...outputData},title: this.noteTitle.trim(), isShared: false, like: 0, comments: [],owner: this.globalStateService.getState()?.user?.email|| ''}
         console.log('Saved content:', this.completeData);
         // Implement your save logic here (e.g., send to backend)
         this.dataEvent.emit(this.completeData);
@@ -158,6 +120,8 @@ export class MyEditorComponent implements OnInit, OnDestroy {
         console.error('Saving failed:', error);
       }
     }
+    }
+   
     return null;
   }
 }
