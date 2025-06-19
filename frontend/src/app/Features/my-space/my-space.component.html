@@ -1,0 +1,28 @@
+<div class="myspace-container">
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <h2 class="section-title">My Space</h2>
+
+    <button class="create-button" (click)="createNote()">Create a New Note</button>
+
+    <div *ngIf="isCreateNoteVisible" class="editor-wrapper">
+      <app-my-editor (dataEvent)="receiveData($event)"></app-my-editor>
+    </div>
+
+    <div *ngIf="isPreviewVisible" class="preview-wrapper">
+      <app-note-preview [data]="files[currentFileIndex]"></app-note-preview>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <h3 class="subheading">My Notes</h3>
+    <div class="note-list">
+  <div *ngFor="let item of files; let i = index" class="note-entry">
+    <button class="note-button" (click)="openPreview(i)">📄 {{ item?.title }}</button>
+    <button class="delete-button" (click)="deleteNote(i)">X</button>
+  </div>
+</div>
+
+  </div>
+</div>

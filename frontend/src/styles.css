@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
-@import "tailwindcss";
-body {
-  @apply bg-green-300;
-}
+/* @import '@editorjs/editorjs/dist/editor.css'; */
+/* @import url('https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest/dist/editorjs.min.css'); */
 
 
 body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* background-color: black; */
 }
+
+
+
+
+

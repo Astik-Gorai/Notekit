@@ -1,0 +1,8 @@
+Patterns For Dynamic Programming-
+
+1. 1D Dp
+2. DP on Grids
+3. DP on Sunsequences
+4. DP on Strings
+5. Partition DP
+6. Matrix Chain Multiplication

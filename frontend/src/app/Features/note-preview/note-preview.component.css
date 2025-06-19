@@ -1,0 +1,172 @@
+.editor-container {
+  max-width: 720px;
+  max-height: 70%;
+  margin: 48px auto;
+  padding: 32px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.note-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.action-button {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #374151;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-button:hover {
+  background-color: #e5e7eb;
+  border-color: #9ca3af;
+  color: #1f2937;
+}
+
+.action-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.action-button.primary {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+}
+
+.action-button.primary:hover {
+  background-color: #2563eb;
+  border: none;
+}
+
+.action-button.share {
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+}
+
+.action-button.share:hover {
+  background-color: #059669;
+  border: none;
+}
+
+.action-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.editor {
+  min-height: 320px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f9fafb;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #374151;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.editor:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.action-buttons > span {
+  /* Layout */
+  display: inline-block;
+  margin-left: 12px;
+  padding: 6px 14px;
+
+  /* Typography */
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+
+  color: var(#37e20d);
+  cursor: pointer;
+  background: rgba(28, 189, 6, 0.15);          /* translucent pill */
+  border: 1px solid var(--clr-primary-h, #6da0ff);
+
+  /* Shape & motion */
+  border-radius: 9999px;                     /* full pill */
+  user-select: none;
+  animation: pulseIn .35s ease-out both;
+}
+
+/* ── SIMPLE CAPTION POPUP ──────────────────────────────────────────── */
+.caption-popup__overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);   /* just a dimmer */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:1100;
+}
+
+.caption-popup__card{
+  /* Wider box, no shadows or gradients */
+  width:min(95vw, 720px);      /* ↑ width increased */
+  background:var(--clr-surface, #1a1b1d);
+  padding:24px 28px;
+  border-radius:8px;
+}
+
+.caption-popup__title{
+  margin:0 0 16px;
+  font-size:30px;
+  color: white;
+  font-weight:600;
+  text-align:center;
+}
+
+.caption-popup__textarea{
+  width:100%;
+  min-height:120px;
+  padding:12px 14px;
+  border:1px solid #2a2a2e;
+  border-radius:6px;
+  background:#0f0f11;
+  color:var(--clr-text, #e5e7eb);
+  resize:vertical;
+}
+
+.caption-popup__actions{
+  margin-top:18px;
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+}

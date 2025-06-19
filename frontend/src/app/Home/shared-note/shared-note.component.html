@@ -1,0 +1,64 @@
+
+<!-- app-loader.component.html -->
+<div class="loader-wrapper">
+  <app-loader *ngIf="isLoading"></app-loader>
+</div>
+
+<div *ngFor="let note of sharedNotes; let i = index">
+  <div class="post-container">
+    <!-- Owner Section -->
+    <div class="owner-section">
+      <div class="avatar-circle">{{ getFirstLetter(note.owner) }}</div>
+      <div>
+        <h2 class="owner-name">{{ note.owner }}</h2>
+      </div>
+    </div>
+
+    <!-- Caption Section -->
+    <div class="caption-section">
+      <h2 class="caption">{{ note.title }}</h2>
+    </div>
+    <h5 class="caption">{{ note.caption }}</h5>
+    
+
+    <!-- Buttons Section -->
+    <div class="buttons-section">
+      <button class="action-button" (click)="openNotePreview(note)">
+        View Full Note
+      </button>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <h4 class="comments-title">Comments</h4>
+      <div class="comments-list" [ngClass]="{'scrollable': note.comments.length > 3}">
+        <div *ngFor="let comment of note.comments" class="comment">
+          <div class="comment-avatar-circle">{{ getFirstLetter(comment.user) }}</div>
+          <div class="comment-content">
+            <p class="comment-user">{{ comment.user }}</p>
+            <p class="comment-text">{{ comment.message }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="comment-input-section">
+        <input
+          type="text"
+          [(ngModel)]="commentInputs[note.noteId!]"
+          placeholder="Add a comment..."
+          class="comment-input"
+        >
+        <button class="post-comment-button" (click)="addComment(note)">Post</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Popup Overlay -->
+<div class="popup-overlay" *ngIf="showNotePreview" (click)="closeNotePreview($event)">
+  <div class="popup-content">
+    <button class="close-button" (click)="closeNotePreview()">
+      <i class="fas fa-times"></i>
+    </button>
+    <app-note-preview [isSharedMode]="isSharedMode" [data]="selectedNote" (close)="closeNotePreview()"></app-note-preview>
+  </div>
+</div>

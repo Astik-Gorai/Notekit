@@ -1,0 +1,7 @@
+Hey I have created a note for DSA problems
+
+First you follow the Basics, like-
+1. Binary Search
+2. Sliding Window
+3. Two Pointers
+4. Dynamic Programming

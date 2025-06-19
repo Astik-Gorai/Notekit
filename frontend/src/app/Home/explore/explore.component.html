@@ -1,0 +1,48 @@
+<div class="explore-container">
+
+  <h2>🔍 Explore Friends</h2>
+  <div class="search-box">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search by name or email" />
+    <button (click)="searchFriend()">Search</button>
+  </div>
+
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+  <div class="section" *ngIf="foundUsers?.length">
+    <h3>Search Results</h3>
+    <div *ngFor="let foundUser of foundUsers" class="profile-card">
+      <div class="profile-avatar">{{ foundUser.name.charAt(0).toUpperCase() }}</div>
+      <div class="user-info">
+        <p><strong>{{ foundUser.name }}</strong></p>
+        <p>{{ foundUser.email }}</p>
+        <button (click)="sendFriendRequest(foundUser.userId)">Send Friend Request</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" *ngIf="friendRequests?.length">
+    <h3>📬 Friend Requests</h3>
+    <div *ngFor="let request of friendRequests" class="profile-card">
+      <div class="profile-avatar">{{ request.name.charAt(0).toUpperCase() }}</div>
+      <div class="user-info">
+        <p><strong>{{ request.name }}</strong></p>
+        <p>{{ request.email }}</p>
+        <button class="accept" (click)="acceptRequest(request.userId)">Accept</button>
+        <button class="reject" (click)="rejectRequest(request.userId)">Reject</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" *ngIf="myFriends?.length">
+    <h3>👥 My Friends</h3>
+    <div *ngFor="let friend of myFriends" class="profile-card">
+      <div class="profile-avatar">{{ friend.name.charAt(0).toUpperCase() }}</div>
+      <div class="user-info">
+        <p><strong>{{ friend.name }}</strong></p>
+        <p>{{ friend.email }}</p>
+        <button class="chat" (click)="openChat(friend.userId)">💬 Chat</button>
+      </div>
+    </div>
+  </div>
+
+</div>

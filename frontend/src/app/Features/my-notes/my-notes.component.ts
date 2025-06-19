@@ -10,6 +10,34 @@ interface FileNode {
   children?: FileNode[];
 }
 
+interface FileData {
+  title: string;
+  isShared: boolean; // Allows sharing status
+  owner: string;
+  like: number; // Stores the number of likes
+  comments: Array<{
+    user: string;
+    message: string; // Fixed typo
+  }>;
+  data: {
+    time: Date;
+    blocks: Array<object>; // Corrected to an array
+    version: string;
+  };
+}
+const defaultFileData: FileData = {
+  title: "Untitled Note",
+  isShared: false,
+  owner: "Unknown",
+  like: 0,
+  comments: [],
+  data: {
+    time: new Date(),
+    blocks: [],
+    version: "2.27.0"
+  }
+};
+
 @Component({
   selector: 'app-my-notes',
   standalone: true,
@@ -68,8 +96,8 @@ export class MyNotesComponent {
   }
 
   createFile(name: string) {
-    const fileNameWithExtension = name.endsWith('.txt') ? name : `${name}.txt`;
-    
+    // const fileNameWithExtension = name.endsWith('.txt') ? name : `${name}.txt`;
+    const fileNameWithExtension = name;
     const newFile: FileNode = {
       name: fileNameWithExtension,
       type: 'file',

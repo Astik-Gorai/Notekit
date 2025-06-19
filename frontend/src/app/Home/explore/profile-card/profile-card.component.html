@@ -1,0 +1,10 @@
+<div class="profile-card">
+  <div class="profile-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+
+  <div class="profile-info">
+    <h2 class="profile-name">{{ userName }}</h2>
+    <p class="profile-email">{{ userEmail }}</p>
+  </div>
+
+  <button class="chat-button" (click)="startChat()">💬 Chat</button>
+</div>

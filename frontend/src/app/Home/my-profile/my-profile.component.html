@@ -1,0 +1,22 @@
+<div class="loader-wrapper">
+  <app-loader *ngIf="isLoading"></app-loader>
+</div>
+<div *ngIf="!isLoading" class="profile-container">
+  <h2 class="profile-title">My Profile</h2>
+
+  <div class="profile-card">
+    <div class="profile-field">
+      <label>Full Name</label>
+      <p>{{ fullname }}</p>
+    </div>
+
+    <div class="profile-field">
+      <label>Email</label>
+      <p>{{ email }}</p>
+    </div>
+
+    <div class="logout-section">
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>
