@@ -15,6 +15,10 @@ import { LandingPageComponent } from './Home/landing-page/landing-page.component
 
 export const routes: Routes = [
     {
+        path: '',
+        component:LandingPageComponent
+    },
+    {
         path:'home',
         component:LandingPageComponent
     },
